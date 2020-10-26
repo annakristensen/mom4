@@ -3,6 +3,8 @@ const concat = require("gulp-concat");
 const uglify = require ("gulp-uglify-es").default;
 const imagemin = require('gulp-imagemin');
 const cleanCSS = require('gulp-clean-css');
+const sass = require('gulp-sass'); 
+sass.compiler = require('node-sass');
 
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
@@ -12,7 +14,8 @@ const files = {
     htmlPath: "src/**/*.html",
     cssPath: "src/**/*.css",
     jsPath: "src/**/*.js",
-    imgPath: "src/**/*.{png,gif,jpg}"
+    imgPath: "src/**/*.{png,gif,jpg}",
+    sassPath: "src/**/*.{sass,scss}"
 }
 
 //kopiera html-filer
@@ -34,8 +37,16 @@ function jsTask() {
 function imgTask() {
     return src(files.imgPath)
         .pipe(imagemin())
-        .pipe(dest('pub/images'));
+        .pipe(dest('pub'));
 }
+
+// Konvertera SASS till CSS
+function sassTask() {
+    return src(files.sassPath)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(dest('pub/css')
+    );
+    }
 
 //sammanslå css-filer och visa ändringar i live reload
 gulp.task('styles', function() {
@@ -53,13 +64,13 @@ function watchTask() {
     browserSync.init({
         server: { baseDir: './pub' }
     });
-    gulp.watch([files.htmlPath, files.jsPath, files.cssPath, files.imgPath], 
-        parallel(copyHTML, jsTask, imgTask, 'styles'));
+    gulp.watch([files.htmlPath, files.jsPath, files.cssPath, files.imgPath, files.sassPath], 
+        parallel(copyHTML, jsTask, sassTask, imgTask, 'styles'));
     gulp.watch("pub/**/*.html").on("change", browserSync.reload);
 }
 
 //default task
 exports.default = series(
-    parallel(copyHTML, jsTask, imgTask),
+    parallel(copyHTML, jsTask, imgTask, sassTask),
     watchTask
 );

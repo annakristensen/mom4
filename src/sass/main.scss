@@ -1,0 +1,131 @@
+/* importera paqrtials */
+@import 'variables';
+@import 'colors';
+@import 'mixins';
+
+/* omslutande div */
+.wrapper {
+    background-color: $white;
+    width: 60%;
+    margin: $center-element;
+    @include for-phone {    
+        width: 95%;
+    }
+    @include for-tablet {    
+        width: 85%;
+    }
+}
+
+/* sidhuvud */
+header {
+    background-color: $color2;
+    text-align: center;
+    padding-top: 20px;
+    @include for-phone {    
+        background-color: adjust-hue( $color2, 15% );
+    }
+    @include for-tablet {    
+        background-color: desaturate( $color2, 20% );
+    }
+}
+
+/* navigation */
+nav {
+    ul {
+        list-style-type: none;
+        margin: 40px 0px;
+        padding-bottom: 15px;
+        background-color: $color2;
+        @include for-phone {    
+            background-color: adjust-hue( $color2, 15% );
+        }
+        @include for-tablet {    
+            background-color: desaturate( $color2, 20% );
+        }
+        li {
+            display: inline;
+            background-color: $color3;
+            padding: 7px 17px;
+            border: $border;
+            @include for-phone {    
+                display: block;
+                margin-left: -40px;
+                margin-bottom: 3px;
+                padding: 3px 17px;
+                background-color: adjust-hue( $color3, 15% );
+            }
+            @include for-tablet {    
+                background-color: desaturate( $color3, 20% );
+            }
+            a {
+                font-family: Arial, Helvetica, sans-serif;
+                color: white;
+                text-decoration: none;
+            }
+          }
+      }
+}
+
+/* Rubriker */
+h1 {
+    font-family: $font-headings;
+    color: $white;
+    @include text-style(40px);
+}
+
+h2 {
+    font-family: $font-headings;
+    @include text-style(23px);
+}
+
+h3 {
+    @extend h2;
+    background-color: $color1;
+    padding: 10px 10px;
+    margin-bottom: -5px;
+    margin-top: 0px;
+    @include for-phone {    
+        background-color: adjust-hue( $color1, 55%);
+    }
+    @include for-tablet {    
+        background-color: desaturate( $color1, 40%);
+    }
+}
+
+/* Artikel */
+article {
+    font-size: $font-size-text;
+    font-family: $font-text;
+    margin-bottom: 40px;
+    border: $border;
+}
+
+/* paragraf */
+p {
+    margin: 15px;
+}
+
+/* bild */
+img {
+    width: 100%;
+}
+
+/* sidfot */
+footer {
+    margin: $center-element;
+    background-color: $color1;
+    text-align: center;
+    padding: 25px;
+    color: $white;
+    font-family: $font-text;
+    font-family: $font-headings;
+    @include for-phone {    
+        background-color: adjust-hue( $color1, 15% );
+    }
+    @include for-tablet {    
+        background-color: desaturate( $color1, 20% );
+    }
+}
+
+
+
